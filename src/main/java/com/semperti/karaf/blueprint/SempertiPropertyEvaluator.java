@@ -10,6 +10,10 @@ import org.apache.aries.blueprint.ext.evaluator.PropertyEvaluator;
 
 public class SempertiPropertyEvaluator implements PropertyEvaluator {
 	private static final Logger logger = LoggerFactory.getLogger(SempertiPropertyEvaluator.class);
+	private static String KEYWORD_SERVICE = "service:";
+	private static String SERVICE_HOST = "_SERVICE_HOST";
+	private static String SERVICE_PORT = "_SERVICE_PORT";
+
 	private Map<String, String> env;
 
 	protected Map<String, String> getEnv() {
@@ -24,9 +28,16 @@ public class SempertiPropertyEvaluator implements PropertyEvaluator {
 
 		logger.debug("Evaluating key: '{}' :: env: '{}' ::  '{}' ************", new Object[] { key, envValue, value });
 
-		if (envValue != null)
+		if (envValue != null && envValue.length() > 0)
 			return envValue;
 
+		if (key.startsWith(KEYWORD_SERVICE))
+			return this.evaluateService(key.substring(KEYWORD_SERVICE.length()), properties);
+
 		return value;
+	}
+
+	protected String evaluateService(String service, Dictionary<String, String> properties) {
+		return evaluate(service+SERVICE_HOST, properties) + ":" + evaluate(service+SERVICE_PORT, properties);
 	}
 }

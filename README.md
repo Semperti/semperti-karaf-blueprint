@@ -3,6 +3,12 @@
 Este _bundle_ tiene un plugin para para los _property placeholders ext_ de _Blueprint_. Primero busca una variable de ambiente
 con el nombre de la propiedad, de encontrarla, devuelve el valor de la variable de ambiente, si no, el valor seteado.
 
+Además, agrega la función `service:NAME`. Esta funcion utiliza dos _placeholders_ definidos usando el _service naming idiom_, para hacer
+referencia a un servicios usando `hostname:port` se utilizaran los _placeholders_:
+
+* `<NAME>_SERVICE_HOST`: para obtener el _host_
+* `<NAME>_SERVICE_PORT`: para obtener el puerto
+
 ## Maven
 
 ```
