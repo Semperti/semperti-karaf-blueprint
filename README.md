@@ -1,13 +1,19 @@
 # Semperti Property Evaluator
 
-Este _bundle_ tiene un plugin para para los _property placeholders ext_ de _Blueprint_. Primero busca una variable de ambiente
-con el nombre de la propiedad, de encontrarla, devuelve el valor de la variable de ambiente, si no, el valor seteado.
+This bundle was develop in order to use Openshift's enviromental variable configuration under [JBoss Fuse Integration Service (FIS) proyects](https://docs.openshift.com/enterprise/3.1/using_images/xpaas_images/fuse.html).
+Red Hat's JBoss Fuse `6.2.x` comes with Apache Camel `2.15`, althought [Camel Property placeholders](http://camel.apache.org/using-propertyplaceholder.html) can read OS's environmental variables in the _Camel Context_, the
+developer cannot use these variable in the rest of the blueprint file. In order to achive this, a property evaluator was develop.
 
-Además, agrega la función `service:NAME`. Esta funcion utiliza dos _placeholders_ definidos usando el _service naming idiom_, para hacer
-referencia a un servicios usando `hostname:port` se utilizaran los _placeholders_:
+This bundle is a plugin for the _property placeholder ext_ of _Blueprint_. The idea came from the [Fabric8 Karaf Blueprint Support](https://fabric8.io/guide/karaf.html#fabric8-karaf-blueprint-support).
+It leverages [Aries PropertyEvaluator](https://github.com/apache/aries/blob/trunk/blueprint/blueprint-core/src/main/java/org/apache/aries/blueprint/ext/evaluator/PropertyEvaluator.java)
+and a custom property placeholder resolver to let you resolve placeholders in your Blueprint XML file.
 
-* `<NAME>_SERVICE_HOST`: para obtener el _host_
-* `<NAME>_SERVICE_PORT`: para obtener el puerto
+Basically, provides the posibility of reading OS environmental variables. This environmental variables have a higher precedence than the property file.
+
+In addition, it adds the function `service:NAME`. This function uses two _placeholders_ defined using the _service naming idiom_:
+
+* `<NAME>_SERVICE_HOST`: in order to obtain the _host_
+* `<NAME>_SERVICE_PORT`: in order to obtain the _port_
 
 ## Maven
 
@@ -15,11 +21,11 @@ referencia a un servicios usando `hostname:port` se utilizaran los _placeholders
 <dependency>
     <groupId>com.semperti.karaf.blueprint</groupId>
     <artifactId>semperti-karaf-blueprint</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
-## Ejemplo
+## Example
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -37,6 +43,6 @@ referencia a un servicios usando `hostname:port` se utilizaran los _placeholders
 
 ## Jexl Evaluator
 
-Este bundle se baso en _Jexl Evaluator_ versión: `1.0.1.redhat-60092` ([pom](https://maven.repository.redhat.com/ga/org/apache/aries/blueprint/org.apache.aries.blueprint.jexl.evaluator/1.0.1.redhat-60092/org.apache.aries.blueprint.jexl.evaluator-1.0.1.redhat-60092.pom), [jar + sources](https://maven.repository.redhat.com/ga/org/apache/aries/blueprint/org.apache.aries.blueprint.jexl.evaluator/1.0.1.redhat-60092/org.apache.aries.blueprint.jexl.evaluator-1.0.1.redhat-60092-sources.jar))
+The project structure is based in _Jexl Evaluator_ `1.0.1.redhat-60092` ([pom](https://maven.repository.redhat.com/ga/org/apache/aries/blueprint/org.apache.aries.blueprint.jexl.evaluator/1.0.1.redhat-60092/org.apache.aries.blueprint.jexl.evaluator-1.0.1.redhat-60092.pom), [jar + sources](https://maven.repository.redhat.com/ga/org/apache/aries/blueprint/org.apache.aries.blueprint.jexl.evaluator/1.0.1.redhat-60092/org.apache.aries.blueprint.jexl.evaluator-1.0.1.redhat-60092-sources.jar))
 
-Repositorio _svn_: `http://svn.apache.org/viewvc/aries/trunk/blueprint/blueprint-jexl-evaluator`
+_Svn_ repository: `http://svn.apache.org/viewvc/aries/trunk/blueprint/blueprint-jexl-evaluator`
